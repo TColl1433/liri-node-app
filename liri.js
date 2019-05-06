@@ -46,7 +46,7 @@ var userQuery = process.argv.slice(3).join(" ");
 
 //the code below allows us to access the keys -- APP logic
 function userCommand(userInput, userQuery) {
-    //make a decision based on teh command
+    //make a decision based on the command
     switch (userInput) {
         case "concert-this":
             concertThis();
