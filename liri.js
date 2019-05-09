@@ -74,7 +74,7 @@ userCommand(userInput, userQuery);
 function spotifyThisSong() {
     console.log(`\n-----------------------------------------\n\nSearching for.."${userQuery}"`);
     //if userquery is not found, pass value for ace of base;
-    if (!userQuery) { userQuery = "the sign ace of base" };
+    if (!userQuery) { userQuery = 'the sign ace of base' };
 
     // spotify search query format
     spotify.search({ type: 'track', query: userQuery, limit: 1 }, function (error, data) {
@@ -94,12 +94,7 @@ function spotifyThisSong() {
 
 
 
-// function movieThis() {
-//     var movieData = "http://www.omdbapi.com/?t=" + userQuery + "&y=&plot=short&apikey=" + process.env.OMbd_API_key
-//     console.log(movieData)
-//     console.log(`\n-----------------------------------------\n\nSearching for.."${userQuery}"`);
-//     //if userquery is not found, pass value for Mr Nobody;
-//     if (!userQuery) { userQuery = "Mr. Nobody" };
+
 
 
 
@@ -116,14 +111,14 @@ function movieThis() {
             // console.log(response.data);
             console.log("-----------------------------------------------------------")
             console.log("Here you go...")
-            console.log("Title: " + response.data.Title);
-            console.log("Release Year: " + response.data.Year);
-            console.log("imdbRating: " + response.data.imdbRating);
+            console.log("\nTitle: " + response.data.Title);
+            console.log("\nRelease Year: " + response.data.Year);
+            console.log("\nimdbRating: " + response.data.imdbRating);
             // console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1])
-            console.log("Location: " + response.data.Country);
-            console.log("Language: " + response.data.Language);
-            console.log("Plot: " + response.data.Plot);
-            console.log("Actors: " + response.data.Actors);
+            console.log("\nLocation: " + response.data.Country);
+            console.log("\nLanguage: " + response.data.Language);
+            console.log("\nPlot: " + response.data.Plot);
+            console.log("\nActors: " + response.data.Actors);
             console.log("-----------------------------------------------------------")
         }
     );
@@ -136,16 +131,7 @@ function movieThis() {
 
 
 
-//--- BAnds in town
-// function concertThis() {
 
-//     bandsintown
-//         .getArtistEventList(userQuery, "upcoming")
-//         .then(function (events) {
-//             console.log(events);
-//         });
-
-// }
 
 function concertThis() {
     var concertData = "http://rest.bandsintown.com" + userQuery + "/events?app_id=" + keys.bands.id
