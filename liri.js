@@ -108,7 +108,7 @@ function movieThis() {
         function (response) {
 
 
-            // console.log(response.data);
+            console.log(response.data);
             console.log("-----------------------------------------------------------")
             console.log("Here you go...")
             console.log("\nTitle: " + response.data.Title);
@@ -125,33 +125,37 @@ function movieThis() {
 }
 
 
-
-
-
-
-
-
-
-
 function concertThis() {
-    var concertData = "http://rest.bandsintown.com" + userQuery + "/events?app_id=" + keys.bands.id
-    // if (!userQuery) { userQuery = "Mr Nobody" };
-    // console.log(movieData)
+    // if (!userQuery) { userQuery = "The Cure" };
+    // var concertData = "http://rest.bandsintown.com/artists/" + userQuery + "/events?app_id=codingbootcamp"
+    var concertData = "http://rest.bandsintown.com/artists/" + userQuery + "/events?app_id=" + process.env.BANDSINTOWN_API_KEY
+
+
 
     axios.get(concertData)
         .then(function (response) {
+            var data = response.data
+            console.log(data);
+            for (i = 0; i < response.data.length; i++){
+                console.log(`\nHere you go!...\n-------------------------------------------
+                \nVenue Name: ${data[i].venue.name}
+                \nVenue: ${data[i].venue.city},${data[i].venue.country}
+                \nDate: ${moment(data[i].datetime).format('MMMM Do YYYY, h:mm a')}
+                 `)
+             }
 
-
-            console.log(response.data);
-            // console.log("-----------------------------------------------------------")
-
-            // console.log("-----------------------------------------------------------")
         }
-        );
+        ).catch(function (err) { console.log(err) })
 }
 
 
-//trying to get my information to print in the random.txt file
+
+
+
+
+
+
+//trying to get my information to print into the random.txt file
 function doThis() {
     fs.readFile("random.txt", "utf8", function (err, data) {
 
@@ -165,9 +169,10 @@ function doThis() {
             spotifyInfor(userInput);
 
         }
-
     })
 }
+
+
 
 
 
