@@ -4,11 +4,12 @@ require("dotenv").config();
 
 var axios = require("axios");
 
-// /require request
-// var request = require("request");
 
-// require moment
-var moment = require("moment");
+
+var moment = require('moment');
+// require("moment/min/locales.min");
+
+// console.log(moment.locale()); // cs
 
 
 //require file systems
@@ -26,8 +27,7 @@ var spotify = new Spotify({
     secret: keys.spotify.secret,
 });
 
-// var Spotify = require("node-spotify-api")
-// spotify = new Spotify(keys1.spotify);
+
 
 //ombd and bands in town apis
 var omdb = (keys.omdb);
@@ -125,8 +125,7 @@ function movieThis() {
 
 
 function concertThis() {
-    if (!userQuery)
-    {userQuery = "The Lumineers"};
+    if (!userQuery) { userQuery = "The Lumineers" };
     // var concertData = "http://rest.bandsintown.com/artists/" + userQuery + "/events?app_id=codingbootcamp"
     var concertData = "http://rest.bandsintown.com/artists/" + userQuery + "/events?app_id=" + process.env.BANDSINTOWN_API_KEY
 
@@ -136,16 +135,18 @@ function concertThis() {
         .then(function (response) {
             var data = response.data
             // console.log(data);
-            if (response.data.length > 0){
+            if (response.data.length > 0) {
+                //changed the for loop so that it would only return the upcoming concert instead of all concerts (i<1)
                 for (i = 0; i < 1; i++) {
                     console.log(`\n-------------------------------------------
                 \nSearching for .... ${userQuery}'s next show....
                 \n\nArtist: ${data[i].lineup[0]}
                 \nVenue Name: ${data[i].venue.name}
-                \nVenue: ${data[i].venue.city},${data[i].venue.country}
-                \nDate: ${moment(data[i].datetime).format('MMMM Do YYYY, h:mm a')}`)
+                \nVenue Location: ${data[i].venue.latitude},${data[i].venue.longitude}
+                \nVenue City: ${data[i].venue.city},${data[i].venue.country}
+                \nDate: ${moment(data[i].datetime).format('MMMM Do YYYY, hh:mm a')}`)
                 };
-            }else{
+            } else {
                 console.log("Sorry I can't find an upcoming show for this Artist")
             }
 
@@ -160,22 +161,26 @@ function concertThis() {
 
 
 
+
+
 //trying to get my information to print into the random.txt file
 function doThis() {
-    fs.readFile("random.txt", "utf8", function (err, data) {
+    fs.readFile("random.txt", "utf8", function (error, data) {
 
-        if (err) {
-            log(err);
+        if (error) { return console.log(error); }
 
-            var readArray = data.split(",");
 
-            userInput = readArray[1];
+        var readArray = data.split(",");
+        //taking objects from random.txt to pass as parameters
+        userInput = readArray[0];
+        userQuery = readArray[1];
 
-            spotifyInfor(userInput);
+        userCommand(userInput, userQuery);
 
-        }
-    })
+    });
 }
+
+
 
 
 
