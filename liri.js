@@ -1,17 +1,14 @@
 //--------------------Step 7 of homework instructions-----------------------------
+//require .env file
 require("dotenv").config();
+
 var axios = require("axios");
 
 // /require request
-var request = require("request");
+// var request = require("request");
 
 // require moment
 var moment = require("moment");
-
-// requre bands in town
-// var bandsintown = require('bandsintown')("codingbootcamp");
-// var bandsintown = require('bandsintown')
-
 
 
 //require file systems
@@ -45,6 +42,8 @@ var userQuery = process.argv.slice(3).join(" ");
 
 
 //the code below allows us to access the keys -- APP logic
+//Using a switch and case instead of if and else statement, we're passing the user input and user Query into
+//the user command function
 function userCommand(userInput, userQuery) {
     //make a decision based on the command
     switch (userInput) {
@@ -126,7 +125,8 @@ function movieThis() {
 
 
 function concertThis() {
-    // if (!userQuery) { userQuery = "The Cure" };
+    if (!userQuery)
+    {userQuery = "The Lumineers"};
     // var concertData = "http://rest.bandsintown.com/artists/" + userQuery + "/events?app_id=codingbootcamp"
     var concertData = "http://rest.bandsintown.com/artists/" + userQuery + "/events?app_id=" + process.env.BANDSINTOWN_API_KEY
 
@@ -135,14 +135,19 @@ function concertThis() {
     axios.get(concertData)
         .then(function (response) {
             var data = response.data
-            console.log(data);
-            for (i = 0; i < response.data.length; i++){
-                console.log(`\nHere you go!...\n-------------------------------------------
+            // console.log(data);
+            if (response.data.length > 0){
+                for (i = 0; i < 1; i++) {
+                    console.log(`\n-------------------------------------------
+                \nSearching for .... ${userQuery}'s next show....
+                \n\nArtist: ${data[i].lineup[0]}
                 \nVenue Name: ${data[i].venue.name}
                 \nVenue: ${data[i].venue.city},${data[i].venue.country}
-                \nDate: ${moment(data[i].datetime).format('MMMM Do YYYY, h:mm a')}
-                 `)
-             }
+                \nDate: ${moment(data[i].datetime).format('MMMM Do YYYY, h:mm a')}`)
+                };
+            }else{
+                console.log("Sorry I can't find an upcoming show for this Artist")
+            }
 
         }
         ).catch(function (err) { console.log(err) })
